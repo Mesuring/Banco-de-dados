@@ -1,12 +1,12 @@
 --Procedimentos tabelas produto
 
 CREATE OR ALTER PROCEDURE pra.incluirProduto
-    @idProd SMALLINT, @nomeProd VARCHAR(25),@qtdEstoque SMALLINT, @info text, @tipo_de_solo VARCHAR(20), @especie VARCHAR(20)
+    @idProd SMALLINT, @nomeProd VARCHAR(25),@qtdEstoque SMALLINT, @info text, @tipo_de_solo VARCHAR(20), @especie VARCHAR(20), @valorUnitario int
 as
 BEGIN
     if NOT exists (Select idProd from pra.Produto where idProd = @idProd)
         begin
-            insert into pra.Produto values (@idProd, @nomeProd, @qtdEstoque, @info, @tipo_de_solo, @especie)
+            insert into pra.Produto values (@idProd, @nomeProd, @qtdEstoque, @info, @tipo_de_solo, @especie,@valorUnitario)
             if @@ERROR <>0
             BEGIN
                 declare @Mensagem NVARCHAR

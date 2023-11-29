@@ -34,6 +34,8 @@ Create TABLE pra.Produto(
     especie NCHAR
 );
 ALTER TABLE pra.Produto ALTER COLUMN especie varchar(20) not null;
+ALTER TABLE pra.Produto Add valorUnitario int not null;
+
 
 CREATE TABLE pra.Fornecedor(
     CNPJ char (14) not null PRIMARY KEY,

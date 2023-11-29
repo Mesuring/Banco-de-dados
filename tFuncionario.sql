@@ -2,12 +2,12 @@
 
 CREATE or ALTER PROCEDURE pra.inserindoFuncionario
     @idFunc char(3), @fFirNome varchar(15),@fMeioNome char(1),@fUltNome varchar(15),
-    @dataNacimento date,@salario int, @nivelPrestigio tinyint
+    @dataNacimento date,@salario int, @nivelPrestigio tinyint,@senhaPadrao varchar(20)
 as 
 BEGIN   --Caso não exista um funcionário com o id apresentado inserir
     if NOT exists (Select idFunc from pra.Funcionario where idFunc = @idFunc)
         begin
-            insert into pra.Funcionario values (@idfunc, @fFirNome,@fMeioNome,@fUltNome,@dataNacimento,@salario,@nivelPrestigio)
+            insert into pra.Funcionario values (@idfunc, @fFirNome,@fMeioNome,@fUltNome,@dataNacimento,@salario,@nivelPrestigio,@senhaPadrao)
             if @@ERROR <>0
             BEGIN
                 declare @Mensagem NVARCHAR
@@ -18,8 +18,6 @@ BEGIN   --Caso não exista um funcionário com o id apresentado inserir
     else -- Caso houver anuncie o ERRO
         RAISERROR ('id de Funcionário já existe no banco de Dados, ARRUME!!',16,2)
 END
-
-
 
 
 CREATE or ALTER PROCEDURE pra.excluirFuncionario
@@ -68,6 +66,7 @@ BEGIN
     set @idade = DATEDIFF(Year,@data, GetDate())
     if @idade<18
     begin
+        delete from pra.Funcionario where idFunc = @idFunc
         RAISERROR('Empregado precisa ter 18 anos ou mais!', 10,1)
     end
     else
@@ -78,6 +77,15 @@ END
 
 CREATE OR ALTER VIEW pra.qtdFuncionarioESalarios AS
 Select
-    COUNT(f.idFunc), COUNT(f.salario)
+    COUNT(f.idFunc) as 'N° Funcionários', SUM(f.salario) as 'Salários totais'
 FROM
     pra.Funcionario as f
+
+CREATE or alter VIEW pra.contaVendas
+AS
+select
+f.fFirNome + ' '+ f.fUltNome as 'Funcinário', COUNT(p.idVenda)  as '#Vendas'
+from
+(pra.Funcionario as f join pra.Pedido as p on f.idFunc = p.idFunc)
+GROUP BY	
+f.fFirNome,f.fUltNome,p.idVenda
