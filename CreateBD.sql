@@ -12,7 +12,7 @@ CREATE TABLE pra.Cliente (
     primary KEY (CPF_Cliente)
 );
 
-ALTER TABLE pra.Cliente ADD senha NCHAR
+ALTER TABLE pra.Cliente ALTER COLUMN senha VARCHAR(20)
 
 Create Table pra.Funcionario (
     idFunc char (3) PRIMARY KEY not null,
@@ -23,7 +23,7 @@ Create Table pra.Funcionario (
     salario int not null,
     nivelPrestigio TINYINT not NULL
 );
-ALTER TABLE pra.Funcionario ADD senha NCHAR not null;
+ALTER TABLE pra.Funcionario ALTER COLUMN senha varchar(20) not null;
 
 Create TABLE pra.Produto(
     idProd SMALLINT PRIMARY KEY not null,
@@ -33,6 +33,7 @@ Create TABLE pra.Produto(
     tipo_de_solo VARCHAR (20),
     especie NCHAR
 );
+ALTER TABLE pra.Produto ALTER COLUMN especie varchar(20) not null;
 
 CREATE TABLE pra.Fornecedor(
     CNPJ char (14) not null PRIMARY KEY,
