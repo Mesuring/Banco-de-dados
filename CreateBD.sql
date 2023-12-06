@@ -3,8 +3,8 @@
 CREATE TABLE pra.Cliente (
     CPF_Cliente CHAR (11) not null,
     firNome VARCHAR (15) not null,
-    meioNome char (1) not NULL,
-    ultNome VARCHAR (15) not null,
+    meioNome char (1),
+    ultNome VARCHAR (15),
     Email VARCHAR (30) not null,
     CEP char (8) not null,
     numCasa SMALLINT not null, 
