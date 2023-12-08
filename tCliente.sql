@@ -66,6 +66,6 @@ Datename(DAY,Aniversario) = DATENAME(DAY, GetDate())
 
 CREATE OR ALTER VIEW pra.verificaLogin as 
 Select
-    Email,senha
+    *
 from
 pra.cliente
